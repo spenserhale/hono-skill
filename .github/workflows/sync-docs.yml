@@ -1,0 +1,65 @@
+name: Sync Hono docs
+
+on:
+  schedule:
+    # Weekly on Monday 08:00 UTC. Adjust to taste.
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Upstream honojs/website ref (branch, tag, or SHA)'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+
+      - name: Run sync script
+        run: bash skills/hono/scripts/sync-docs.sh --ref "${{ github.event.inputs.ref || 'main' }}"
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if [[ -n "$(git status --porcelain skills/hono/references/docs)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Read upstream commit from manifest
+        if: steps.diff.outputs.changed == 'true'
+        id: manifest
+        run: |
+          sha=$(awk -F': ' '/^upstream_commit:/ {print $2; exit}' skills/hono/references/docs/_manifest.md)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "short=${sha:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Open PR with synced docs
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: sync/hono-docs
+          base: main
+          commit-message: |
+            chore(docs): sync from honojs/website@${{ steps.manifest.outputs.short }}
+          title: "chore(docs): sync from honojs/website@${{ steps.manifest.outputs.short }}"
+          body: |
+            Automated sync of Hono docs from https://github.com/honojs/website at commit `${{ steps.manifest.outputs.sha }}`.
+
+            - Regenerates `skills/hono/references/docs/` via `skills/hono/scripts/sync-docs.sh`.
+            - Each file's frontmatter includes the upstream source URL and commit.
+
+            Merge when ready. Close without merging to skip this sync.
+          author: "Spenser Hale <opensource@spenserhale.dev>"
+          committer: "Spenser Hale <opensource@spenserhale.dev>"
+          delete-branch: true
+          add-paths: |
+            skills/hono/references/docs

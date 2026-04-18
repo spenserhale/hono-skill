@@ -1,0 +1,63 @@
+---
+source: https://github.com/honojs/website/blob/main/docs/middleware/builtin/pretty-json.md
+live: https://hono.dev/docs/middleware/builtin/pretty-json
+upstream_commit: a597bd40c01dd00a2ec2d8afd550c1ffebd2f7f1
+synced: 2026-04-18
+---
+
+<!-- Synced from https://github.com/honojs/website/blob/main/docs/middleware/builtin/pretty-json.md -->
+<!-- For the latest version fetch: https://raw.githubusercontent.com/honojs/website/main/docs/middleware/builtin/pretty-json.md -->
+
+# Pretty JSON Middleware
+
+Pretty JSON middleware enables "_JSON pretty print_" for JSON response body.
+Adding `?pretty` to url query param, the JSON strings are prettified.
+
+```js
+// GET /
+{"project":{"name":"Hono","repository":"https://github.com/honojs/hono"}}
+```
+
+will be:
+
+```js
+// GET /?pretty
+{
+  "project": {
+    "name": "Hono",
+    "repository": "https://github.com/honojs/hono"
+  }
+}
+```
+
+## Import
+
+```ts
+import { Hono } from 'hono'
+import { prettyJSON } from 'hono/pretty-json'
+```
+
+## Usage
+
+```ts
+const app = new Hono()
+
+app.use(prettyJSON()) // With options: prettyJSON({ space: 4 })
+app.get('/', (c) => {
+  return c.json({ message: 'Hono!' })
+})
+```
+
+## Options
+
+### <Badge type="info" text="optional" /> space: `number`
+
+Number of spaces for indentation. The default is `2`.
+
+### <Badge type="info" text="optional" /> query: `string`
+
+The name of the query string for applying. The default is `pretty`.
+
+### <Badge type="info" text="optional" /> force: `boolean`
+
+When set to `true`, JSON responses are always prettified regardless of the query parameter. The default is `false`.
