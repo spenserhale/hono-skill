@@ -1,6 +1,6 @@
 # hono skill
 
-A Claude [skill](https://www.anthropic.com/news/skills) containing the whole [Hono](https://hono.dev) ecosystem as offline reference material — all 84 official docs pages, plus guides for the starter template, `create-hono`, and official example apps.
+An agent skill (SKILL.md format) containing the whole [Hono](https://hono.dev) ecosystem as offline reference material — all 84 official docs pages, plus guides for the starter template, `create-hono`, and official example apps.
 
 ## What's inside
 
@@ -25,19 +25,23 @@ skills/hono/
 .github/workflows/sync-docs.yml     ← weekly automated sync PR
 ```
 
-Every file under `references/` carries YAML frontmatter with the upstream `source:` GitHub URL, the live `live:` hono.dev URL, and the `synced:` date — so an AI using this skill can decide when to fetch the latest version instead of relying on the snapshot.
+Every file under `references/` carries YAML frontmatter with the upstream `source:` GitHub URL, the live `live:` hono.dev URL, and the `synced:` date — so an agent using this skill can decide when to fetch the latest version instead of relying on the snapshot.
 
 ## Installing the skill
 
+Drop it into your agent's skills directory. Example for Claude Code:
+
 ```sh
-# Claude Code (per-user skills)
+# copy just the skill folder
 cp -r skills/hono ~/.claude/skills/
 
-# Or clone directly
-git clone https://github.com/<your-gh-user>/hono-skill ~/.claude/skills/hono-skill
+# or clone this whole repo
+git clone https://github.com/spenserhale/hono-skill ~/.claude/skills/hono-skill
 ```
 
-Then reload Claude Code (or restart Claude.ai).
+Then reload your agent so it picks up the new skill.
+
+Other agent runtimes that understand the SKILL.md format should work the same way — point them at `skills/hono/`.
 
 ## Keeping it in sync
 
@@ -62,4 +66,4 @@ The script:
 ## Related
 
 - Upstream docs: https://github.com/honojs/website · https://hono.dev
-- Companion skill (CLI): [`hono-cli-skill`](../hono-cli-skill)
+- Companion skill (CLI): https://github.com/spenserhale/hono-cli-skill
