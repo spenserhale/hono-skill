@@ -1,13 +1,11 @@
 ---
 name: hono
-description: 'Offline reference for the Hono web framework — all 84 docs pages (routing, API, middleware, helpers, RPC, JSX, validation, testing, per-runtime getting-started), plus starter templates, the `create-hono` scaffolder, and example apps. Use for anything Hono: routes, middleware, helpers, deploying to Workers/Pages/Bun/Deno/Node/Vercel/Lambda/etc., the `hc` RPC client, JSX/SSR, or Zod/Valibot/ArkType validation — even if "Hono" isn''t named (code imports `hono` or `@hono/*`). For `hono` CLI commands, defer to the `hono-cli` skill.'
+description: 'Offline reference for the Hono web framework — (routing, API, middleware, helpers, RPC, JSX, validation, testing, per-runtime getting-started), plus starter templates, the `create-hono` scaffolder, and example apps. Use for anything Hono: routes, middleware, helpers, deploying to Workers/Pages/Bun/Deno/Node/Vercel/Lambda/etc., the `hc` RPC client, JSX/SSR, or Zod/Valibot/ArkType validation — even if "Hono" isn''t named (code imports `hono` or `@hono/*`). For `hono` CLI commands, defer to the `hono-cli` skill.'
 ---
 
 # Hono skill — index
 
 Hono is a small, fast, web-standards-based framework that runs on every modern JavaScript runtime. This skill is your offline reference to the whole ecosystem.
-
-> **Every reference file carries a single `source:` frontmatter field pointing to the upstream GitHub file.** Sync date and upstream commit are recorded once in [`references/docs/_manifest.md`](references/docs/_manifest.md) — check there for freshness. To fetch the absolute latest of any file, swap `github.com/.../blob/` → `raw.githubusercontent.com/.../` in the `source:` URL and `curl`/`WebFetch` it.
 
 ## What lives where
 
@@ -52,22 +50,4 @@ Pick the shallowest reference that answers the question. The docs tree is pre-or
 3. **If the sync is old** or the user reports behavior that doesn't match: fetch the latest by transforming `source:` into a raw URL (`github.com/.../blob/` → `raw.githubusercontent.com/.../`) and `curl`/`WebFetch` it.
 4. **Cross-reference**: middleware pages assume the Context API; helper pages assume familiarity with routes. When a file references `c.json()` or similar without defining it, look in [`references/docs/api/context.md`](references/docs/api/context.md).
 
-## When to prefer live sources
 
-The docs here are a snapshot. Prefer fetching live when:
-
-- The user reports behavior that conflicts with this reference (framework may have updated).
-- The user asks about a middleware/helper/runtime that isn't in the tree (may be new upstream).
-- The sync date in `_manifest.md` is more than a few weeks old and the user is shipping production code.
-- The user is on a Hono version newer than the snapshot implies (check their `package.json`).
-
-To fetch the live file: take the `source:` URL from the frontmatter, replace `github.com/…/blob/` with `raw.githubusercontent.com/…/`, and `curl`/`WebFetch` it.
-
-## Staying in sync
-
-This skill is refreshed from upstream via:
-
-- `scripts/sync-docs.sh` — clones honojs/website, converts VitePress markdown to skill reference files, embeds provenance frontmatter.
-- `.github/workflows/sync-docs.yml` — runs the script on a schedule (and on demand) and commits the result.
-
-`references/docs/_manifest.md` records the upstream commit SHA of the last sync.
