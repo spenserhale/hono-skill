@@ -27,21 +27,37 @@ skills/hono/
 
 Every file under `references/` carries YAML frontmatter with the upstream `source:` GitHub URL, the live `live:` hono.dev URL, and the `synced:` date — so an agent using this skill can decide when to fetch the latest version instead of relying on the snapshot.
 
-## Installing the skill
+## Install
 
-Drop it into your agent's skills directory. Example for Claude Code:
+### With [`skills`](https://skills.sh) (recommended)
+
+The [`skills` CLI](https://github.com/vercel-labs/skills) auto-detects your coding agent (Claude Code, Cursor, Codex, Copilot, Windsurf, Gemini CLI, OpenCode, Aider, Cline, + 35 more) and drops the skill into the right directory.
 
 ```sh
-# copy just the skill folder
-cp -r skills/hono ~/.claude/skills/
+# project-local (committed with your repo, shared with your team)
+npx skills add spenserhale/hono-skill
 
-# or clone this whole repo
+# user-global (available across all projects)
+npx skills add spenserhale/hono-skill -g
+
+# target a specific agent explicitly
+npx skills add spenserhale/hono-skill -a claude-code
+npx skills add spenserhale/hono-skill -a cursor -a codex
+```
+
+Update later with `npx skills update hono`, remove with `npx skills remove hono`.
+
+### Manual
+
+If you'd rather copy files yourself, drop `skills/hono/` into your agent's skills directory. Example for Claude Code:
+
+```sh
+cp -r skills/hono ~/.claude/skills/
+# or
 git clone https://github.com/spenserhale/hono-skill ~/.claude/skills/hono-skill
 ```
 
-Then reload your agent so it picks up the new skill.
-
-Other agent runtimes that understand the SKILL.md format should work the same way — point them at `skills/hono/`.
+Then reload your agent. Any runtime that understands the `SKILL.md` format works the same way — point it at `skills/hono/`.
 
 ## Keeping it in sync
 
