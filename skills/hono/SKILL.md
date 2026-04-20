@@ -1,6 +1,6 @@
 ---
 name: hono
-description: Offline reference for the Hono web framework — all 84 docs pages (routing, API, middleware, helpers, RPC, JSX, validation, testing, per-runtime getting-started), plus starter templates, the `create-hono` scaffolder, and example apps. Use for anything Hono: routes, middleware, helpers, deploying to Workers/Pages/Bun/Deno/Node/Vercel/Lambda/etc., the `hc` RPC client, JSX/SSR, or Zod/Valibot/ArkType validation — even if "Hono" isn't named (code imports `hono` or `@hono/*`). For `hono` CLI commands, defer to the `hono-cli` skill.
+description: 'Offline reference for the Hono web framework — all 84 docs pages (routing, API, middleware, helpers, RPC, JSX, validation, testing, per-runtime getting-started), plus starter templates, the `create-hono` scaffolder, and example apps. Use for anything Hono: routes, middleware, helpers, deploying to Workers/Pages/Bun/Deno/Node/Vercel/Lambda/etc., the `hc` RPC client, JSX/SSR, or Zod/Valibot/ArkType validation — even if "Hono" isn''t named (code imports `hono` or `@hono/*`). For `hono` CLI commands, defer to the `hono-cli` skill.'
 ---
 
 # Hono skill — index
