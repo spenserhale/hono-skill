@@ -1,11 +1,6 @@
 ---
 source: https://github.com/honojs/starter
-live: https://github.com/honojs/starter
-synced: 2026-04-18
 ---
-
-<!-- Synced from https://github.com/honojs/starter -->
-<!-- For the latest version fetch: https://raw.githubusercontent.com/honojs/starter/main/README.md -->
 
 # honojs/starter — starter templates
 

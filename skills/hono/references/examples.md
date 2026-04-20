@@ -1,11 +1,6 @@
 ---
 source: https://github.com/honojs/examples
-live: https://github.com/honojs/examples
-synced: 2026-04-18
 ---
-
-<!-- Synced from https://github.com/honojs/examples -->
-<!-- For the latest version fetch: https://raw.githubusercontent.com/honojs/examples/main/README.md -->
 
 # honojs/examples — runnable example apps
 

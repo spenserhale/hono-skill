@@ -2,7 +2,7 @@
 source_repo: https://github.com/honojs/website
 ref: main
 upstream_commit: a597bd40c01dd00a2ec2d8afd550c1ffebd2f7f1
-synced: 2026-04-18
+synced: 2026-04-20
 file_count: 84
 ---
 

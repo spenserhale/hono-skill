@@ -1,11 +1,6 @@
 ---
 source: https://github.com/honojs/create-hono
-live: https://github.com/honojs/create-hono
-synced: 2026-04-18
 ---
-
-<!-- Synced from https://github.com/honojs/create-hono -->
-<!-- For the latest version fetch: https://raw.githubusercontent.com/honojs/create-hono/main/README.md -->
 
 # create-hono — project scaffolder
 

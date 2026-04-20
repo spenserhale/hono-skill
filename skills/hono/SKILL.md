@@ -7,7 +7,7 @@ description: Offline reference for the Hono web framework — all 84 docs pages 
 
 Hono is a small, fast, web-standards-based framework that runs on every modern JavaScript runtime. This skill is your offline reference to the whole ecosystem.
 
-> **Every reference file in this skill carries `source:` and `live:` frontmatter pointing to the upstream GitHub file and the hono.dev page it was generated from.** If anything looks stale or you need the absolute latest, fetch the raw file from GitHub (the URL is in each file's header comment) instead of guessing.
+> **Every reference file carries a single `source:` frontmatter field pointing to the upstream GitHub file.** Sync date and upstream commit are recorded once in [`references/docs/_manifest.md`](references/docs/_manifest.md) — check there for freshness. To fetch the absolute latest of any file, swap `github.com/.../blob/` → `raw.githubusercontent.com/.../` in the `source:` URL and `curl`/`WebFetch` it.
 
 ## What lives where
 
@@ -48,8 +48,8 @@ Pick the shallowest reference that answers the question. The docs tree is pre-or
 ## Workflow: answering a Hono question
 
 1. **Narrow to an area** using the table above.
-2. **Open the matching file** under `references/`. Read the frontmatter — it tells you the upstream path and sync date.
-3. **If the sync date is old** or the user reports behavior that doesn't match: fetch the latest with the URL in the file's header comment (or `curl -fsSL <raw_url>`) and trust that instead.
+2. **Open the matching file** under `references/`. `source:` tells you the upstream path; check [`references/docs/_manifest.md`](references/docs/_manifest.md) for the sync date / upstream commit.
+3. **If the sync is old** or the user reports behavior that doesn't match: fetch the latest by transforming `source:` into a raw URL (`github.com/.../blob/` → `raw.githubusercontent.com/.../`) and `curl`/`WebFetch` it.
 4. **Cross-reference**: middleware pages assume the Context API; helper pages assume familiarity with routes. When a file references `c.json()` or similar without defining it, look in [`references/docs/api/context.md`](references/docs/api/context.md).
 
 ## When to prefer live sources
@@ -58,10 +58,10 @@ The docs here are a snapshot. Prefer fetching live when:
 
 - The user reports behavior that conflicts with this reference (framework may have updated).
 - The user asks about a middleware/helper/runtime that isn't in the tree (may be new upstream).
-- The `synced:` date in the relevant file is more than a few weeks old and the user is shipping production code.
+- The sync date in `_manifest.md` is more than a few weeks old and the user is shipping production code.
 - The user is on a Hono version newer than the snapshot implies (check their `package.json`).
 
-Each doc file's frontmatter has the `source:` GitHub URL. The raw file for `curl`/WebFetch is the same URL with `github.com/…/blob/` swapped for `raw.githubusercontent.com/…/`.
+To fetch the live file: take the `source:` URL from the frontmatter, replace `github.com/…/blob/` with `raw.githubusercontent.com/…/`, and `curl`/`WebFetch` it.
 
 ## Staying in sync
 

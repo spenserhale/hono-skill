@@ -88,20 +88,16 @@ while IFS= read -r -d '' src; do
   mkdir -p "$(dirname "$out")"
 
   github_url="https://github.com/honojs/website/blob/$REF/docs/$rel"
-  raw_url="https://raw.githubusercontent.com/honojs/website/$REF/docs/$rel"
-  live_path="${rel%.md}"
-  [[ "$live_path" == */index ]] && live_path="${live_path%/index}"
-  live_url="https://hono.dev/docs/$live_path"
 
+  # Per-file frontmatter is intentionally minimal: just `source:`.
+  # The sync date and upstream commit are the same for every file in a
+  # batch — they live in `_manifest.md` once, not in 84 headers. The
+  # raw URL for fetching is a deterministic transform of `source:` (swap
+  # `/blob/` for `/raw/`), explained in SKILL.md.
   {
     printf -- '---\n'
     printf -- 'source: %s\n' "$github_url"
-    printf -- 'live: %s\n' "$live_url"
-    printf -- 'upstream_commit: %s\n' "$COMMIT_SHA"
-    printf -- 'synced: %s\n' "$SYNCED_ON"
     printf -- '---\n\n'
-    printf -- '<!-- Synced from %s -->\n' "$github_url"
-    printf -- '<!-- For the latest version fetch: %s -->\n\n' "$raw_url"
     transform "$src"
   } > "$out"
   count=$((count + 1))
