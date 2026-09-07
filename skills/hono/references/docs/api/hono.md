@@ -28,7 +28,7 @@ An instance of `Hono` has the following methods.
 - app.**basePath**(path)
 - app.**notFound**(handler)
 - app.**onError**(err, handler)
-- app.**mount**(path, anotherApp)
+- app.**mount**(path, anotherApp, \[options\])
 - app.**fire**()
 - app.**fetch**(request, env, event)
 - app.**request**(path, options)
@@ -179,6 +179,30 @@ const app = new Hono()
 
 // Mount!
 app.mount('/itty-router', ittyRouter.handle)
+```
+
+By default, `mount()` passes a new `Request` with the mount path removed from its URL. Provide a `replaceRequest` function to control which `Request` is passed to the mounted application:
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+const handler = (request: Request) => new Response(request.url)
+// ---cut---
+app.mount('/app', handler, {
+  replaceRequest: (originalRequest) => originalRequest,
+})
+```
+
+To pass the original `Request` unchanged, set `replaceRequest` to `false` as a shorthand for the function above:
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+const handler = (request: Request) => new Response(request.url)
+// ---cut---
+app.mount('/app', handler, {
+  replaceRequest: false,
+})
 ```
 
 ## strict mode

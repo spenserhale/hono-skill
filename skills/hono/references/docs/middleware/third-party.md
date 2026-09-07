@@ -17,7 +17,9 @@ Most of this middleware leverages external libraries.
 - [OIDC Auth](https://github.com/honojs/middleware/tree/main/packages/oidc-auth)
 - [Firebase Auth](https://github.com/honojs/middleware/tree/main/packages/firebase-auth)
 - [Verify RSA JWT (JWKS)](https://github.com/wataruoguchi/verify-rsa-jwt-cloudflare-worker)
+- [SSOJet Auth](https://github.com/ssojet/ssojet-hono)
 - [Stytch Auth](https://github.com/honojs/middleware/tree/main/packages/stytch-auth)
+- [Shopify Auth](https://github.com/besart-k/hono-shopify-auth)
 
 ### Validators
 
@@ -60,8 +62,9 @@ Most of this middleware leverages external libraries.
 ### Server / Adapter
 
 - [GraphQL Server](https://github.com/honojs/middleware/tree/main/packages/graphql-server)
-- [Node WebSocket Helper](https://github.com/honojs/middleware/tree/main/packages/node-ws)
+- [oRPC](https://orpc.dev/docs/adapters/hono)
 - [tRPC Server](https://github.com/honojs/middleware/tree/main/packages/trpc-server)
+- [mcp-use (MCP Server)](https://github.com/mcp-use/mcp-use)
 
 ### Transpiler
 
@@ -91,11 +94,13 @@ Most of this middleware leverages external libraries.
 - [Hono Rate Limiter](https://github.com/rhinobase/hono-rate-limiter)
 - [Hono Problem Details (RFC 9457)](https://github.com/paveg/hono-problem-details)
 - [Hono Simple DI](https://github.com/maou-shonen/hono-simple-DI)
+- [InferDI](https://github.com/inferdi/inferdi/tree/main/packages/hono)
 - [Idempotency (Stripe-style idempotency keys)](https://github.com/paveg/hono-idempotency)
 - [idempot-js](https://js.idempot.dev) - spec-compliant middleware, supporting multiple storage backends (redis, postgres, mysql, sqlite)
 - [jsonv-ts (Validator, OpenAPI, MCP)](https://github.com/dswbx/jsonv-ts)
 - [MCP](https://github.com/honojs/middleware/tree/main/packages/mcp)
 - [RONIN (Database)](https://github.com/ronin-co/hono-client)
 - [Session](https://github.com/honojs/middleware/tree/main/packages/session)
+- [StitchAPI (Typed, resilient API calls + SSE)](https://github.com/rejifald/StitchAPI/tree/main/packages/hono)
 - [tsyringe](https://github.com/honojs/middleware/tree/main/packages/tsyringe)
 - [User Agent based Blocker](https://github.com/honojs/middleware/tree/main/packages/ua-blocker)

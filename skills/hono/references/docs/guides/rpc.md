@@ -40,6 +40,9 @@ const route = app.post(
 )
 ```
 
+> [!TIP]
+> The [Standard Schema Validator](https://github.com/honojs/middleware/tree/main/packages/standard-validator) works as well, so you can use any Standard Schema library such as Valibot.
+
 Then, export the type to share the API spec with the Client.
 
 ```ts
@@ -848,3 +851,42 @@ const booksClient = hc<typeof booksApp>('/books')
 ```
 
 This way, `tsserver` doesn't need to instantiate types for all routes at once.
+
+### Handlers that return a promise chain
+
+A handler that returns a `.then()` chain directly loses its response type, so the client infers `unknown`:
+
+```ts
+const app = new Hono().get('/', (c) =>
+  Promise.resolve({ hello: 'world' }).then((d) => c.json(d))
+)
+
+const client = hc<typeof app>('')
+const res = await client.index.$get()
+const data = await res.json() // unknown
+```
+
+This is a TypeScript inference limitation — the response type cannot be inferred through a `.then()` chain. Use `async`/`await` instead:
+
+```ts
+const app = new Hono().get('/', async (c) => {
+  const d = await Promise.resolve({ hello: 'world' })
+  return c.json(d)
+})
+
+const client = hc<typeof app>('')
+const res = await client.index.$get()
+const data = await res.json() // { hello: string }
+```
+
+If you cannot avoid the chain, annotating `then()` also works:
+
+```ts
+import type { TypedResponse } from 'hono/types'
+
+const app = new Hono().get('/', (c) =>
+  Promise.resolve({ hello: 'world' }).then<
+    TypedResponse<{ hello: string }, 200, 'json'>
+  >((d) => c.json(d, 200))
+)
+```
