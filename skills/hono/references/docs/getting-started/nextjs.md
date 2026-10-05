@@ -67,7 +67,7 @@ If you use the App Router, Edit `app/api/[[...route]]/route.ts`. Refer to the [S
 
 ```ts
 import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
+import { handle } from '@hono/vercel'
 
 const app = new Hono().basePath('/api')
 
@@ -78,6 +78,8 @@ app.get('/hello', (c) => {
 })
 
 export const GET = handle(app)
+
+`handle` comes from the `@hono/vercel` package, which the starter installs. On an existing project, add it with `npm i @hono/vercel`.
 export const POST = handle(app)
 ```
 
@@ -131,11 +133,11 @@ bun add @hono/node-server
 ```
 
 
-Then, you can utilize the `handle` function imported from `@hono/node-server/vercel` in `pages/api/[[...route]].ts`.
+Then, you can utilize the `getRequestListener` function imported from `@hono/node-server` in `pages/api/[[...route]].ts`.
 
 ```ts
+import { getRequestListener } from '@hono/node-server'
 import { Hono } from 'hono'
-import { handle } from '@hono/node-server/vercel'
 import type { PageConfig } from 'next'
 
 export const config: PageConfig = {
@@ -152,7 +154,7 @@ app.get('/hello', (c) => {
   })
 })
 
-export default handle(app)
+export default getRequestListener(app.fetch)
 ```
 
 In order for this to work with the Pages Router, it's important to disable Vercel Node.js helpers by setting up an environment variable in your project dashboard or in your `.env` file.

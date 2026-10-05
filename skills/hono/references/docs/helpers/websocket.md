@@ -5,24 +5,26 @@ source: https://github.com/honojs/website/blob/main/docs/helpers/websocket.md
 # WebSocket Helper
 
 WebSocket Helper is a helper for server-side WebSockets in Hono applications.
-Currently Cloudflare Workers / Pages, Deno, and Bun adapters are available.
+Currently Cloudflare Workers / Pages, Deno, Bun, and Node.js adapters are available.
 
 ## Import
+
+The adapter for each runtime is a separate package (`@hono/cloudflare-workers`, `@hono/deno`, `@hono/bun`, ...). Install the one for your runtime.
 
 
 ```ts [Cloudflare Workers]
 import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/cloudflare-workers'
+import { upgradeWebSocket } from '@hono/cloudflare-workers'
 ```
 
 ```ts [Deno]
 import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/deno'
+import { upgradeWebSocket } from '@hono/deno'
 ```
 
 ```ts [Bun]
 import { Hono } from 'hono'
-import { upgradeWebSocket, websocket } from 'hono/bun'
+import { upgradeWebSocket, websocket } from '@hono/bun'
 
 // ...
 
@@ -32,8 +34,16 @@ export default {
 }
 ```
 
+```ts [Node.js]
+import { serve, upgradeWebSocket } from '@hono/node-server'
+import { Hono } from 'hono'
+import { WebSocketServer } from 'ws'
+```
 
-If you use Node.js, you can use [@hono/node-ws](https://github.com/honojs/middleware/tree/main/packages/node-ws).
+
+On Node.js, WebSocket support is built into `@hono/node-server`. To enable it, install `ws` and, if you use TypeScript, `@types/ws`. Then create a `WebSocketServer` with `{ noServer: true }` and pass it to `serve()` via the `websocket` option.
+
+`@hono/node-ws` is deprecated.
 
 ## `upgradeWebSocket()`
 
@@ -101,7 +111,7 @@ See the examples using WebSocket Helper.
 ```ts
 // server.ts
 import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/cloudflare-workers'
+import { upgradeWebSocket } from '@hono/cloudflare-workers'
 
 const app = new Hono().get(
   '/ws',
@@ -136,7 +146,7 @@ ws.addEventListener('open', () => {
 
 ```tsx
 import { Hono } from 'hono'
-import { upgradeWebSocket, websocket } from 'hono/bun'
+import { upgradeWebSocket, websocket } from '@hono/bun'
 import { html } from 'hono/html'
 
 const app = new Hono()
@@ -184,4 +194,30 @@ export default {
   fetch: app.fetch,
   websocket,
 }
+```
+
+### Node.js
+
+```ts
+import { serve, upgradeWebSocket } from '@hono/node-server'
+import { Hono } from 'hono'
+import { WebSocketServer } from 'ws'
+
+const app = new Hono()
+
+app.get(
+  '/ws',
+  upgradeWebSocket(() => ({
+    onMessage(event, ws) {
+      ws.send(event.data)
+    },
+  }))
+)
+
+const wss = new WebSocketServer({ noServer: true })
+
+serve({
+  fetch: app.fetch,
+  websocket: { server: wss },
+})
 ```

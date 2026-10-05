@@ -18,6 +18,7 @@ app.get('/', (c) => c.text('GET /'))
 app.post('/', (c) => c.text('POST /'))
 app.put('/', (c) => c.text('PUT /'))
 app.delete('/', (c) => c.text('DELETE /'))
+app.query('/', (c) => c.text('QUERY /'))
 
 // Wildcard
 app.get('/wild/*/card', (c) => {
