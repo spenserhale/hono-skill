@@ -34,7 +34,7 @@ app.get('/stream', (c) => {
 
 ## `streamText()`
 
-It returns a streaming response with `Content-Type:text/plain`, `Transfer-Encoding:chunked`, and `X-Content-Type-Options:nosniff` headers.
+It returns a streaming response with `Content-Type: text/plain`, `Transfer-Encoding: chunked`, and `X-Content-Type-Options: nosniff` headers.
 
 ```ts
 app.get('/streamText', (c) => {
@@ -51,7 +51,7 @@ app.get('/streamText', (c) => {
 
 > **Warning**
 
-If you are developing an application for Cloudflare Workers, a streaming may not work well on Wrangler. If so, add `Identity` for `Content-Encoding` header.
+If you are developing an application for Cloudflare Workers, streaming may not work well on Wrangler. If so, add `Identity` for `Content-Encoding` header.
 
 ```ts
 app.get('/streamText', (c) => {
@@ -73,7 +73,7 @@ let id = 0
 
 app.get('/sse', async (c) => {
   return streamSSE(c, async (stream) => {
-    while (true) {
+    while (!stream.aborted) {
       const message = `It is ${new Date().toISOString()}`
       await stream.writeSSE({
         data: message,

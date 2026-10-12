@@ -103,6 +103,9 @@ process.on('SIGTERM', () => {
 })
 ```
 
+> **Info**
+On Node.js, `serve()` wraps the `node:http` module and returns the underlying server instance, so closing it is up to you. Bun and Deno serve Fetch handlers natively and manage the server themselves, which is why their guides don't include this step.
+
 ## 3. Run
 
 Run the development server locally. Then, access `http://localhost:3000` in your Web browser.
@@ -129,6 +132,36 @@ You can specify the port number with the `port` option.
 serve({
   fetch: app.fetch,
   port: 8787,
+})
+```
+
+## WebSocket
+
+WebSocket support is built into `@hono/node-server`. Install `ws` and, if you use TypeScript, `@types/ws`. Then create a `WebSocketServer` with `{ noServer: true }` and pass it to `serve()` with the `websocket` option.
+
+`@hono/node-ws` is deprecated.
+
+```ts
+import { serve, upgradeWebSocket } from '@hono/node-server'
+import { Hono } from 'hono'
+import { WebSocketServer } from 'ws'
+
+const app = new Hono()
+
+app.get(
+  '/ws',
+  upgradeWebSocket(() => ({
+    onMessage(event, ws) {
+      ws.send(event.data)
+    },
+  }))
+)
+
+const wss = new WebSocketServer({ noServer: true })
+
+serve({
+  fetch: app.fetch,
+  websocket: { server: wss },
 })
 ```
 

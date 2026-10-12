@@ -78,6 +78,7 @@ Here are some examples of use-cases.
 | [OpenStatus](https://openstatus.dev)                                               | Bun                | An open-source website & API monitoring platform. _Hono is used for the API server_.                        |
 | [Deno Benchmarks](https://deno.com/benchmarks)                                     | Deno               | A secure TypeScript runtime built on V8. _Hono is used for benchmarking_.                                   |
 | [Clerk](https://clerk.com)                                                         | Cloudflare Workers | An open-source User Management Platform. _Hono is used for the API server_.                                 |
+| [PostHog](https://posthog.com)                                                     | Node.js            | The open-source platform for building self-driving products. _Hono is used for the MCP server_.             |
 
 And the following.
 
@@ -136,7 +137,6 @@ See [more information about routes](/docs/concepts/routers).
 Thanks to the use of the **Web Standards**, Hono works on a lot of platforms.
 
 - Cloudflare Workers
-- Cloudflare Pages
 - Fastly Compute
 - Deno
 - Bun

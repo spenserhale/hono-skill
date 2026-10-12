@@ -50,11 +50,14 @@ app.get('/signed-cookie', (c) => {
     'cookie_name0'
   )
   deleteCookie(c, 'cookie_name0')
-  // `getSignedCookie` will return `false` for a specified cookie if the signature was tampered with or is invalid
+  // `getSignedCookie` will return `false` for a specified cookie if its signature fails verification
   const allSignedCookies = await getSignedCookie(c, secret)
   // ...
 })
 ```
+
+> [!NOTE]
+> `getSignedCookie` distinguishes two cases. A cookie that has a signature but fails verification returns `false`. A cookie that does not have a valid signature format is treated as not being a signed cookie at all and returns `undefined` — the same as when the cookie is not present. This rule applies both when retrieving a single cookie by name and when retrieving all signed cookies. Since both `false` and `undefined` are falsy, `if (!value)` handles both cases.
 
 ### Cookie Generation
 
@@ -172,7 +175,7 @@ const deletedCookie = deleteCookie(c, 'delicious_cookie')
 
 ## `__Secure-` and `__Host-` prefix
 
-The Cookie helper supports `__Secure-` and `__Host-` prefix for cookies names.
+The Cookie helper supports `__Secure-` and `__Host-` prefixes for cookie names.
 
 If you want to verify if the cookie name has a prefix, specify the prefix option.
 
