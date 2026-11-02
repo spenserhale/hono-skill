@@ -4,7 +4,7 @@ source: https://github.com/honojs/website/blob/main/docs/getting-started/bun.md
 
 # Bun
 
-[Bun](https://bun.com) is another JavaScript runtime. It's not Node.js or Deno. Bun includes a transcompiler, we can write the code with TypeScript.
+[Bun](https://bun.com) is another JavaScript runtime. It's not Node.js or Deno. Bun includes a transcompiler, so we can write the code in TypeScript or plain JavaScript.
 Hono also works on Bun.
 
 ## 1. Install Bun
@@ -62,7 +62,7 @@ app.get('/', (c) => c.text('Hello Bun!'))
 export default app
 ```
 
-If you are setting up Hono on an existing project, the `bun run dev` command expects the "Hello World" script to be placed in `src/index.tx`
+If you are setting up Hono on an existing project, the `bun run dev` command expects the "Hello World" script to be placed in `src/index.ts`
 
 ## 4. Run
 
@@ -94,10 +94,14 @@ export default { // [!code ++]
 
 ## Serve static files
 
-To serve static files, use `serveStatic` which is imported from `hono/bun`.
+To serve static files, use `serveStatic` from the `@hono/bun` package.
+
+```sh
+bun add @hono/bun
+```
 
 ```ts
-import { serveStatic } from 'hono/bun'
+import { serveStatic } from '@hono/bun'
 
 const app = new Hono()
 
@@ -121,6 +125,9 @@ For the above code, it will work well with the following directory structure.
     └── images
         └── dinotocat.png
 ```
+
+> **Warning**
+Route matching is case-sensitive, but the file system may not be. On Windows and macOS, `/ADMIN/secret.txt` resolves to the same file as `/admin/secret.txt`, and Windows also accepts 8.3 short names such as `/PROTEC~1`. Path-scoped middleware such as `app.use('/admin/*', auth)` does not match those spellings, so do not rely on it to protect files under a static root. Keep protected files outside the directory you serve, or apply the middleware to every path that `serveStatic` handles.
 
 ### `rewriteRequestPath`
 
