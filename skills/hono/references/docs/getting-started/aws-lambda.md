@@ -22,7 +22,7 @@ Initialize your project with the `cdk` CLI.
 mkdir my-app
 cd my-app
 cdk init app -l typescript
-npm i hono
+npm i hono @hono/aws-lambda
 npm i -D esbuild
 mkdir lambda
 touch lambda/index.ts
@@ -32,7 +32,7 @@ touch lambda/index.ts
 mkdir my-app
 cd my-app
 cdk init app -l typescript
-yarn add hono
+yarn add hono @hono/aws-lambda
 yarn add -D esbuild
 mkdir lambda
 touch lambda/index.ts
@@ -42,7 +42,7 @@ touch lambda/index.ts
 mkdir my-app
 cd my-app
 cdk init app -l typescript
-pnpm add hono
+pnpm add hono @hono/aws-lambda
 pnpm add -D esbuild
 mkdir lambda
 touch lambda/index.ts
@@ -52,7 +52,7 @@ touch lambda/index.ts
 mkdir my-app
 cd my-app
 cdk init app -l typescript
-bun add hono
+bun add hono @hono/aws-lambda
 bun add -D esbuild
 mkdir lambda
 touch lambda/index.ts
@@ -65,7 +65,7 @@ Edit `lambda/index.ts`.
 
 ```ts
 import { Hono } from 'hono'
-import { handle } from 'hono/aws-lambda'
+import { handle } from '@hono/aws-lambda'
 
 const app = new Hono()
 
@@ -130,8 +130,8 @@ In Hono, you can access the AWS Lambda Events and Context by binding the `Lambda
 
 ```ts
 import { Hono } from 'hono'
-import type { LambdaEvent, LambdaContext } from 'hono/aws-lambda'
-import { handle } from 'hono/aws-lambda'
+import type { LambdaEvent, LambdaContext } from '@hono/aws-lambda'
+import { handle } from '@hono/aws-lambda'
 
 type Bindings = {
   event: LambdaEvent
@@ -156,8 +156,8 @@ In Hono, you can access the AWS Lambda request context by binding the `LambdaEve
 
 ```ts
 import { Hono } from 'hono'
-import type { LambdaEvent } from 'hono/aws-lambda'
-import { handle } from 'hono/aws-lambda'
+import type { LambdaEvent } from '@hono/aws-lambda'
+import { handle } from '@hono/aws-lambda'
 
 type Bindings = {
   event: LambdaEvent
@@ -179,8 +179,8 @@ you can access the AWS Lambda request context by binding the `ApiGatewayRequestC
 
 ```ts
 import { Hono } from 'hono'
-import type { ApiGatewayRequestContext } from 'hono/aws-lambda'
-import { handle } from 'hono/aws-lambda'
+import type { ApiGatewayRequestContext } from '@hono/aws-lambda'
+import { handle } from '@hono/aws-lambda'
 
 type Bindings = {
   requestContext: ApiGatewayRequestContext
@@ -211,7 +211,7 @@ Typically, the implementation requires writing chunks to NodeJS.WritableStream u
 
 ```ts
 import { Hono } from 'hono'
-import { streamHandle } from 'hono/aws-lambda'
+import { streamHandle } from '@hono/aws-lambda'
 import { streamText } from 'hono/streaming'
 
 const app = new Hono()
